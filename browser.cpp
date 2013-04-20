@@ -1,0 +1,89 @@
+#include "browser.h"
+
+#include "ui_login.h"
+
+QtBrowser::QtBrowser(QWidget *parent, Qt::WFlags flags)
+    : QMainWindow(parent, flags)
+{
+    ui.setupUi(this);
+
+    reloadButton=findChild<QPushButton*>("reloadButton");
+    urlEdit=findChild<QLineEdit*>("urlEdit");
+    web=findChild<QWebView*>("webView");
+
+    QAction *actionNew_Window=findChild<QAction*>("actionNew_Window");
+    connect(actionNew_Window,SIGNAL(triggered()),
+            this,SLOT(handleNewWindow()));
+
+    QAction *actionLogin=findChild<QAction*>("actionAbout");
+    connect(actionLogin,SIGNAL(triggered()),
+            this,SLOT(handleAbout()));
+
+    Ui::Login loginUi;
+    loginUi.setupUi(&login);
+}
+
+QtBrowser::~QtBrowser()
+{
+
+}
+
+void QtBrowser::closeEvent(QCloseEvent *event)
+{
+   login.close();
+}
+
+void QtBrowser::handleReloadButton()
+{
+    if(reloadButton->text()=="Reload")
+        web->reload();
+    else
+        web->stop();
+}
+
+void QtBrowser::handleFinishedLoad(bool ok)
+{
+    reloadButton->setText("Reload");
+
+    if(ok)
+        statusBar()->showMessage("Load successful",5000);
+    else
+        statusBar()->showMessage("Load failed or was cancelled",5000);
+}
+
+void QtBrowser::handleTitleChange(QString newTitle)
+{
+    setWindowTitle(newTitle);
+}
+
+void QtBrowser::handleLoadStarted()
+{
+    reloadButton->setText("Stop");
+}
+
+void QtBrowser::handleURLChange(QUrl newURL)
+{
+    urlEdit->setText(newURL.toString());
+}
+
+void QtBrowser::handleProgress(int percent)
+{
+    statusBar()->showMessage(QString::number(percent)+"%",1000);
+}
+
+void QtBrowser::handleURLEdit()
+{
+    QString urlText=urlEdit->text();
+    web->setUrl(urlText);
+}
+
+void QtBrowser::handleNewWindow()
+{
+    QtBrowser *newWindow=new QtBrowser();
+    newWindow->show();
+}
+
+void QtBrowser::handleAbout()
+{
+    login.show();
+}

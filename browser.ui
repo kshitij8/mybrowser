@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtBrowserClass</class>
+ <widget class="QMainWindow" name="QtBrowserClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>764</width>
+    <height>582</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Speedy Browser</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>URL</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="urlEdit">
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="forwardButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Go</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="reloadButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Refresh</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="backButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Go Back</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QWebView" name="webView" native="true">
+      <property name="url" stdset="0">
+       <url>
+        <string>http://www.google.com/</string>
+       </url>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>764</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuBrowser">
+    <property name="title">
+     <string>Browser</string>
+    </property>
+    <addaction name="actionNew_Window"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Login</string>
+    </property>
+    <addaction name="actionLogin"/>
+   </widget>
+   <addaction name="menuBrowser"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionNew_Window">
+   <property name="text">
+    <string>New Window</string>
+   </property>
+  </action>
+  <action name="actionLogin">
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>backButton</sender>
+   <signal>clicked()</signal>
+   <receiver>webView</receiver>
+   <slot>back()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>480</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>444</x>
+     <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>webView</receiver>
+   <slot>forward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>633</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>634</x>
+     <y>64</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>webView</sender>
+   <signal>statusBarMessage(QString)</signal>
+   <receiver>statusBar</receiver>
+   <slot>showMessage(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>225</x>
+     <y>541</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>578</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>webView</sender>
+   <signal>loadFinished(bool)</signal>
+   <receiver>QtBrowserClass</receiver>
+   <slot>handleFinishedLoad(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>webView</sender>
+   <signal>titleChanged(QString)</signal>
+   <receiver>QtBrowserClass</receiver>
+   <slot>handleTitleChange(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>81</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>webView</sender>
+   <signal>loadProgress(int)</signal>
+   <receiver>QtBrowserClass</receiver>
+   <slot>handleProgress(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>webView</sender>
+   <signal>urlChanged(QUrl)</signal>
+   <receiver>QtBrowserClass</receiver>
+   <slot>handleURLChange(QUrl)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>247</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>webView</sender>
+   <signal>loadStarted()</signal>
+   <receiver>QtBrowserClass</receiver>
+   <slot>handleLoadStarted()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>urlEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QtBrowserClass</receiver>
+   <slot>handleURLEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>355</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>415</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reloadButton</sender>
+   <signal>clicked()</signal>
+   <receiver>QtBrowserClass</receiver>
+   <slot>handleReloadButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>564</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>546</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>handleFinishedLoad(bool)</slot>
+  <slot>handleProgress(int)</slot>
+  <slot>handleTitleChange(QString)</slot>
+  <slot>handleURLChange(QUrl)</slot>
+  <slot>handleLoadStarted()</slot>
+  <slot>handleURLEdit()</slot>
+  <slot>handleReloadButton()</slot>
+ </slots>
+</ui>
